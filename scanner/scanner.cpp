@@ -79,25 +79,25 @@ string tokenName[30] = { "WORD1", "WORD2", "PERIOD", "VERB", "VERBNEG", "VERBPAS
 
 string reservedwords[20][2] =
 {
-	"masu", "VERB",
-	"masen", "VERBNEG",
-	"mashita", "VERBPAST",
-	"masendeshita", "VERBPASTNEG",
-	"desu", "IS",
-	"deshita", "WAS",
-	"o", "OBJECT",
-	"wa", "SUBJECT",
-	"ni", "DESTINATION",
-	"watashi", "PRONOUN",
-	"anata", "PRONOUN",
-	"kare", "PRONOUN",
-	"kanojo", "PRONOUN",
-	"sore", "PRONOUN",
-	"mata", "CONNECTOR"
-	"soshite", "CONNECTOR"
-	"shikashi", "CONNECTOR",
-	"dakara", "CONNECTOR",
-	"eofm", "EOFM"
+  {	"masu", "VERB"},
+  { "masen", "VERBNEG"},
+  {	"mashita", "VERBPAST"},
+  { "masendeshita", "VERBPASTNEG"},
+  {	"desu", "IS"},
+  {  "deshita", "WAS"},
+  {	"o", "OBJECT"},
+  {  "wa", "SUBJECT"},
+  {	"ni", "DESTINATION"},
+  {  "watashi", "PRONOUN"},
+  {	"anata", "PRONOUN"},
+  {	"kare", "PRONOUN"},
+  {	"kanojo", "PRONOUN"},
+  { "sore", "PRONOUN"},
+  { "mata", "CONNECTOR"},
+  {"soshite", "CONNECTOR"},
+  {"shikashi", "CONNECTOR"},
+  {	"dakara", "CONNECTOR"},
+  {	"eofm", "EOFM"}
 
 };
 
@@ -107,24 +107,83 @@ ifstream fin;  // global stream for reading from the input file
 
 // Scanner processes only one word each time it is called
 // Gives back the token type and the word itself
-// ** Done by: 
+// ** Done by: Julian Conner,
 int scanner(tokentype& a, string& w)
 {
 
+  string currentWord; // To store the word for readability during processing
+  string endOfFileWord = reservedwords[18][0]; // Used for readability
+  bool isEndOfFile; 
+
 	// ** Grab the next word from the file via fin
 	// 1. If it is eofm, return right now.   
+  isEndOfFile = fin.eof();
 
+  // Check if the file stream is empty
+  if( isEndOfFile ) {
+    a = EOFM;
+    w = endOfFileWord;
+    
+    return -1;
+  }
+
+  
+  // Get the next word for processing
+  fin >> currentWord;
+
+  // To return the word by reference 
+  w = currentWord;
+
+  // Check if the last word is the end of file message
+  isEndOfFile = currentWord.compare( endOfFileWord) == 0;
+
+  if( isEndOfFile ){
+
+    a = EOFM;
+
+    return 0;
+  }
+
+        
 	/*
 	2. Call the token functions one after another (if-then-else)
 	And generate a lexical error message if both DFAs failed.
 	Let the token_type be ERROR in that case.
+ 
+	*/
 
-	3. Then, make sure WORDs are checked against the reservedwords list
-	If not reserved, token_type is WORD1 or WORD2.
-
+  /*
 	4. Return the token type & string  (pass by reference)
 	*/
 
+  // Check if its a valid word
+  if( word( currentWord )  ) {
+
+  /*
+	3. Then, make sure WORDs are checked against the reservedwords list
+	If not reserved, token_type is WORD1 or WORD2.
+  */
+
+    // FOR DANIEL : (Note : The test labels all words as errors because there's no implementation here for the word check yet. It works for periods and end of files. )
+
+    }
+
+    // Check if its a period
+    else if ( periodDFA( currentWord ) ) {
+
+      a = PERIOD;
+  }
+
+    // If the word wasn't a valid token, show a lexical error
+  else {
+
+    a = ERROR;
+    cout << "LEXICAL ERROR : \"" << currentWord << "\" is not a valid token."
+         << endl;
+  }
+
+
+   
 }//the end of scanner
 
 
