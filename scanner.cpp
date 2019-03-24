@@ -10,6 +10,8 @@ using namespace std;
 
 // --------- DFAs ---------------------------------
 
+//Purpose: check to see if it's a vowel
+//Done by: Daniel Caballero
 bool vowelCheck(char c)
 {
   switch(c){
@@ -28,6 +30,8 @@ bool vowelCheck(char c)
   }
 }
 
+//Purpose: Check consonant Pairs
+//Done by Daniel Caballero
 bool checkConsPairs(string s, int &charpos, int& state)
 {
   
@@ -102,12 +106,21 @@ bool word(string s)
   int tempState=0;
   while (s[charpos] != '\0')
     {
-      if (state== 6)
+      if ((state== 6))
+	state =0;    
+      else if (state == 0 && s[charpos] == 't')
+        state = 3;
+      else if (state == 0 && s[charpos] == 's')
+        state = 2;
+      else if (state == 0 && s[charpos] == 'c')
+        state = 1;
+      else if ((state == 0) && (vowelCheck(s[charpos])==true))
 	{
-	  state =0;    
+	  //	  cout<<"\t"<<vowelCheck(s[charpos])<<endl;
+	  state=6;
 	}
-      else if (state == 0 && vowelCheck(s[charpos]))
-	state=6;
+      else if ((state == 0) && (checkConsPairs(s,charpos,tempState)==true))
+        state=tempState;
       else if (state == 0 && s[charpos] == 'j')
         state = 5;
       else if(state == 0 && s[charpos] == 'z')
@@ -118,17 +131,6 @@ bool word(string s)
         state = 5;
       else if(state == 0 && s[charpos] == 'y')
 	state =5;
-      else if ((state == 0) && (checkConsPairs(s,charpos,tempState)==true))
-	{
-	  // cout <<"its true";
-        state=tempState;
-	}
-      else if (state == 0 && s[charpos] == 't')
-        state = 3;
-      else if (state == 0 && s[charpos] == 's')
-        state = 2;
-      else if (state == 0 && s[charpos] == 'c')
-        state = 1;
       else if (state ==5 && vowelCheck(s[charpos]))
 	state = 6;
       else if (state ==5 && s[charpos]=='s')
@@ -152,11 +154,11 @@ bool word(string s)
       else 
 	return(false);
       charpos++;
-      cout<<state<<endl;
+      //cout<<state<<endl;
     }//end of while
 
   // where did I end up????
-  if ((state == 6) || (state ==0)) return(true);  // end in a final state
+  if ((state == 6) || (state == 0)) return(true);  // end in a final state
   else return(false);
 }
 
@@ -289,7 +291,8 @@ int scanner(tokentype& a, string& w)
     */
     
     // FOR DANIEL : (Note : The test labels all words as errors because there's no implementation here for the word check yet. It works for periods and end of files. )
-    
+    //START Daniel Section
+    bool reservedFlag=false;
     for (int i=0;i<rIndexA;i++){
       if (currentWord==reservedWords[i][0]){
 	if (reservedWords[i][1]==tokenName[3])
@@ -314,15 +317,17 @@ int scanner(tokentype& a, string& w)
 	  a=PRONOUN;
 	else if (reservedWords[i][1]==tokenName[13])
 	  a=CONNECTOR;
-	else if ((currentWord[currentWord.length()-1] <=90) && (currentWord[currentWord.length()-1]>=65))//uppercase
-	  a=WORD2;
-	else 
-	  a=WORD1;
-      
-	
+	reservedFlag=true;
 	  }
-    }//end for
-  }
+    }
+    if (((currentWord[currentWord.length()-1] <=90)) && ((currentWord[currentWord.length()-1]>=65)&& reservedFlag==false))//uppercase
+	a=WORD2;
+    else if (reservedFlag==false) 
+	a=WORD1;	
+	  
+    
+
+  }//end DANIEL SECTION
 
   // Check if its a period
   else if ( periodDFA( currentWord ) ) {
