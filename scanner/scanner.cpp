@@ -99,7 +99,7 @@ bool checkConsPairs(string s, int &charpos, int& state)
 
 // ** MYTOKEN DFA to be replaced by the WORD DFA
 // ** Done by:Daniel Caballero, Julian Conner
-// ** RE:
+// ** RE: (vowel | vowel n | consonant vowel | consonant vowel n | consonant-pair vowel | consonant-pair vowel n)^+
 bool word(string s)
 {
   int state = 0;
