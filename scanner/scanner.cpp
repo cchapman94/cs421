@@ -91,13 +91,14 @@ bool checkConsPairs(string s, int &charpos, int& state)
     default:
       return false;
     }
+  return false;
 }
 
 
 
 
 // ** MYTOKEN DFA to be replaced by the WORD DFA
-// ** Done by:Daniel Caballero
+// ** Done by:Daniel Caballero, Julian Conner
 // ** RE:
 bool word(string s)
 {
@@ -106,8 +107,13 @@ bool word(string s)
   int tempState=0;
   while (s[charpos] != '\0')
     {
-      if ((state== 6))
-	state =0;    
+      if ( ( (state== 6) && (s[charpos+1] == 'n')) )
+	state =6;    
+      else if ( state == 6 && s[charpos] == 'n' )
+	state = 0;
+      else if ( state == 6) {
+	state = 0;
+      }
       else if (state == 0 && s[charpos] == 't')
         state = 3;
       else if (state == 0 && s[charpos] == 's')
@@ -116,8 +122,14 @@ bool word(string s)
         state = 1;
       else if ((state == 0) && (vowelCheck(s[charpos])==true))
 	{
+	  if( s[charpos+1] == 'n'){
 	  //	  cout<<"\t"<<vowelCheck(s[charpos])<<endl;
 	  state=6;
+	  }
+
+	  else {
+	    state = 0;
+	  }
 	}
       else if ((state == 0) && (checkConsPairs(s,charpos,tempState)==true))
         state=tempState;
@@ -131,24 +143,74 @@ bool word(string s)
         state = 5;
       else if(state == 0 && s[charpos] == 'y')
 	state =5;
+
+      // q0 to qY(state 4) by bmknhpr
+      else if ( state == 0 && ( s[charpos] == 'b' || s[charpos] == 'm'
+				|| s[charpos] == 'k' || s[charpos] == 'n'
+				|| s[charpos] == 'h' || s[charpos] == 'p'
+				|| s[charpos] == 'r' )  ){
+
+		  state = 4;
+      }
       else if (state ==5 && vowelCheck(s[charpos]))
-	state = 6;
+      
+	{
+
+	  if( s[charpos+1] == 'n'){
+	  state=6;
+	  }
+
+	  else {
+
+	    state = 0;
+		}
+
+	}
       else if (state ==5 && s[charpos]=='s')
 	state =6;
       else if (state ==5 && s[charpos]=='a')
 	state=6;
       else if (state == 4 && vowelCheck(s[charpos]))
-	state =6;
+	{
+	  if( s[charpos+1] == 'n'){
+	  state=6;
+	  }
+
+	  else {
+
+	    state = 0;
+		}
+
+	}
       else if (state == 4 && s[charpos]== 'y')
 	state =5;
       else if (state == 3 && s[charpos] == 's')
 	state=5;
       else if (state == 3 && vowelCheck(s[charpos]))
-	state=6;
-      else if (state == 2 && s[charpos] == 'h')
+	{
+	  if( s[charpos+1] == 'n'){
+	  state=6;
+	  }
+
+	  else {
+
+	    state = 0;
+		}
+	} 
+     else if (state == 2 && s[charpos] == 'h')
 	state=5;
       else if (state == 2 && vowelCheck(s[charpos]))
-	state=6;
+	{
+	  if( s[charpos + 1] == 'n'){
+
+	    state = 6;
+	  }
+
+	  else {
+		state = 0;
+		}
+
+	}      
       else if (state == 1 && s[charpos] == 'h')
 	state=5;
       else 
@@ -201,8 +263,8 @@ string tokenName[30] = { "WORD1", "WORD2", "PERIOD", "VERB", "VERBNEG", "VERBPAS
 // ** Do not require any file input for this.
 // ** a.out should work without any additional files.
 
-const int rIndexA=20;
-const int rIndexB=20;
+const int rIndexA=19;
+const int rIndexB=2;
 string reservedWords[rIndexA][rIndexB] =
   {
     {"masu", "VERB"},
