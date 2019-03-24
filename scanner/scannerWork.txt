@@ -5,13 +5,13 @@ Group#: 10
 1.	Indicate who did what by giving names.
 Must have divided the work as specified by the assignment
 sheet:
-o	Member A tasks  - who:    
-o	Member B tasks  - who:    
-o	Member C tasks  - who:Daniel Caballero
+o	Member A tasks  - who: Daniel Caballero    
+o	Member B tasks  - who: Julian Conner    
+o	Member C tasks  - who: Chantell Chapman
 
 If the member did not fully contribute to the assigned part, do not list his/her name!!!!!
 
-2.     Each person came to the meeting?
+2.     Each person came to the meeting? Yes
 
 3.     You have included all the required comments? (RE and Programmer)
 
