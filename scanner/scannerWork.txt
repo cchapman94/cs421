@@ -13,9 +13,9 @@ If the member did not fully contribute to the assigned part, do not list his/her
 
 2.     Each person came to the meeting? Yes
 
-3.     You have included all the required comments? (RE and Programmer)
+3.     You have included all the required comments? (RE and Programmer) Yes
 
 4.     Your program works on scannertest1 and scannertest2?
        It works for all of scannertest1 and  scannertest2
-5.     Any other remarks.
+5.     Any other remarks. N/A
 
