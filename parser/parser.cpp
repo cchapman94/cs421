@@ -36,6 +36,25 @@ using namespace std;
 // i.e. Done by:
 
 
+//Done by: Chantell Chapman
+// Grammar: <story> ::= <s> {<s>}
+// stay in the loop as long as a possible start 
+void story() 
+{
+	cout << "Processing <story>" << endl << endl;
+	s();
+	while (true)
+  {
+		if (next_token() == EOFM)
+    {
+			cout << endl << "Successfully parsed <story>." << endl;
+			break;
+		}
+		s();
+		
+	}
+}
+
 //---------------------------------------
 
 // The new test driver to start the parser
