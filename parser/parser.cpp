@@ -35,8 +35,70 @@ using namespace std;
 // ** Be sure to put the name of the programmer above each function
 // i.e. Done by:
 
+//Done by:
+// 10. Grammar: <tense> ::= VERBPAST | VERBPASTNEG | VERB | VERBNEG
+
+
+// 9. Grammar: <be> ::= IS | WAS
+
+
+// 8. Grammar: <verb> ::= WORD2
+
+
+
+//Done by:
+// 7. Grammar: <noun> ::= WORD1 | PRONOUN
+
+
+// 6. Grammar: <after_object> ::= <noun> DESTINATION <verb> <tense> PERIOD | <verb> <tense> PERIOD
+
+
+// Grammar: <after noun> ::= <be> PERIOD | DESTINATION <verb> <tense> PERIOD 
+//                          	| OBJECT <after obejct>
+
+
 
 //Done by: Chantell Chapman
+// Grammar: <after subject>::= <verb> <tense> PERIOD | <noun> <after noun>
+void after_subject() 
+{
+	cout << "Processing <afterSubject>" << endl;
+	switch (next_token())
+	{
+	case WORD2:
+		verb();
+		tense();
+		match(PERIOD);
+		break;
+	case WORD1: case PRONOUN:
+		noun();
+		after_noun();
+		break;
+	default:
+		syntaxError2(AFTER_SUBJECT);
+	}
+}
+
+// Grammar: <s>::= [CONNECTOR] <noun> SUBJECT <after subject>
+void s() 
+{
+	cout << "Processing <s>" << endl;
+	switch (next_token()) 
+	{
+	case CONNECTOR:
+		match(CONNECTOR);
+		noun();
+		match(SUBJECT);
+		after_subject();
+		break;
+	default:
+		noun();
+		match(SUBJECT);
+		after_subject();
+		break;
+	}
+}
+
 // Grammar: <story> ::= <s> {<s>}
 // stay in the loop as long as a possible start 
 void story() 
