@@ -53,8 +53,7 @@ using namespace std;
 // 6. Grammar: <after_object> ::= <noun> DESTINATION <verb> <tense> PERIOD | <verb> <tense> PERIOD
 
 
-// Grammar: <after noun> ::= <be> PERIOD | DESTINATION <verb> <tense> PERIOD 
-//                          	| OBJECT <after obejct>
+// Grammar: <after noun> ::= <be> PERIOD | DESTINATION <verb> <tense> PERIOD | OBJECT <after obejct>
 
 
 
