@@ -1,7 +1,13 @@
 #include<iostream>
 #include<fstream>
 #include<string>
+#include"scanner.cpp"
 using namespace std;
+
+//Global Variables
+
+
+
 
 // INSTRUCTION:  Complete all ** parts.
 // You may use any method to connect this file to scanner.cpp
@@ -24,7 +30,31 @@ using namespace std;
 
 // ** Need the updated match and next_token (with 2 global vars)
 // ** Be sure to put the name of the programmer above each function
-// i.e. Done by:
+// i.e. Done by:Daniel Caballero
+tokentype saved_token;
+bool token_available;
+
+tokentype next_token()
+{
+  string saved_lexeme;
+  if (!token_available)   // if there is no saved token yet
+    { scanner(saved_token, saved_lexeme);  // call scanner to grab a new token
+      token_available = true;                              // mark that fact that you have saved it
+    }
+  return saved_token;    // return the saved token
+
+}
+
+boolean match(token_type expected)
+{
+  if (next_token() != expected)  // mismatch has occurred with the next token
+    { // calls a syntax error function here to  generate a syntax error message here and do recovery
+    }
+  else  // match has occurred
+    {   token_available = false;  // eat up the token
+      return true;              // say there was a match
+    }
+}
 
 
 // ----- RDP functions - one per non-term -------------------
@@ -46,74 +76,136 @@ using namespace std;
 
 
 
-//Done by:
+//Done by:Daniel Caballero
 // 7. Grammar: <noun> ::= WORD1 | PRONOUN
+void noun()
+{
+  cout<<"Processing <noun>"<<endl;
+  switch
+    {
+    case WORD1:
+      match(WORD1);
+      break;
+    case PRONOUN:
+      match(PRONOUN);
+      break;
+    default:
+      syntaxError2(NOUN_ERROR);
 
+    }//end Swtich
+}//end noun
 
 // 6. Grammar: <after_object> ::= <noun> DESTINATION <verb> <tense> PERIOD | <verb> <tense> PERIOD
+void after_object()
+{
+  cout<<"Processing <afterSubject>"<<endl
+    switch(next_token)
+      {
+      case NOUN:
+	match(DESRINATION);
+	verb();
+	tense();
+	match(PERIOD);
+	break;
+      case VERB:
+	tense();
+	match(PERIOD);
+	break;
+      default:
+	syntaxError2(AFTER_OBJECT);
+    
+      }//end swtich
+
+}//end after object
+
 
 
 // Grammar: <after noun> ::= <be> PERIOD | DESTINATION <verb> <tense> PERIOD | OBJECT <after obejct>
+void after_noun()
+{
+  cout<<"Processing <after_nount>"<<endl;
+  switch(next_token())
+    {
+    case WORD1:
+    case PRONOUN:
+      be();
+      match(PERIOD);
+      break;
+    case DESTINATION:
+      verb();
+      tense();
+      match(PERIOD);
+    case OBJECT:
+      after_object();
+      break;
+    case
+    default:
+      syntaxError2(AFTER_NOUN);
 
+    }//end switch
+
+
+
+}//end after_noun
 
 
 //Done by: Chantell Chapman
 // Grammar: <after subject>::= <verb> <tense> PERIOD | <noun> <after noun>
 void after_subject() 
 {
-	cout << "Processing <afterSubject>" << endl;
-	switch (next_token())
-	{
-	case WORD2:
-		verb();
-		tense();
-		match(PERIOD);
-		break;
-	case WORD1: case PRONOUN:
-		noun();
-		after_noun();
-		break;
-	default:
-		syntaxError2(AFTER_SUBJECT);
-	}
+  cout << "Processing <afterSubject>" << endl;
+  switch (next_token())
+    {
+    case WORD2:
+      verb();
+      tense();
+      match(PERIOD);
+      break;
+    case WORD1: case PRONOUN:
+      noun();
+      after_noun();
+      break;
+    default:
+      syntaxError2(AFTER_SUBJECT);
+    }
 }
 
 // Grammar: <s>::= [CONNECTOR] <noun> SUBJECT <after subject>
 void s() 
 {
-	cout << "Processing <s>" << endl;
-	switch (next_token()) 
-	{
-	case CONNECTOR:
-		match(CONNECTOR);
-		noun();
-		match(SUBJECT);
-		after_subject();
-		break;
-	default:
-		noun();
-		match(SUBJECT);
-		after_subject();
-		break;
-	}
+  cout << "Processing <s>" << endl;
+  switch (next_token()) 
+    {
+    case CONNECTOR:
+      match(CONNECTOR);
+      noun();
+      match(SUBJECT);
+      after_subject();
+      break;
+    default:
+      noun();
+      match(SUBJECT);
+      after_subject();
+      break;
+    }
 }
 
 // Grammar: <story> ::= <s> {<s>}
 // stay in the loop as long as a possible start 
 void story() 
 {
-	cout << "Processing <story>" << endl << endl;
-	s();
-	while (true)
-  {
-		if (next_token() == EOFM)
+  cout << "Processing <story>" << endl << endl;
+  s();
+  while (true)
     {
-			cout << endl << "Successfully parsed <story>." << endl;
-			break;
-		}
-		s();
-		
+      if (next_token() == EOFM)
+	{
+	  cout << endl << "Successfully parsed <story>." << endl;
+	  break;
 	}
+      s();
+      
+    }
 }
 
 //---------------------------------------
@@ -128,20 +220,19 @@ int main()
   cin >> filename;
   fin.open(filename.c_str());
 
-//-----syntax error EC------
+  //-----syntax error EC------
 
-//ask user if they want to trace error messages
-//get user input
+  //ask user if they want to trace error messages
+  //get user input
   //if file 
   errorfile.open("errors.txt", ios::app); //errors.text of messages
 
   //** calls the <story> to start parsing
-    story();
-//** closes the input file 
+  story();
+  //** closes the input file 
   errorfile.close(); //close errors file
   fin.close();
 
 }// end
 //** require no other input files!
 //** syntax error EC requires producing errors.text of messages
-
