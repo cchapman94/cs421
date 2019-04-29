@@ -96,6 +96,8 @@ bool match(tokentype expected)
 	
   else  // match has occurred
     {   token_available = false;  // eat up the token
+     	cout << "Matched" << tokenName[expected] <<endl;
+
       return true;              // say there was a match
     }
 }
