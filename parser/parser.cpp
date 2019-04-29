@@ -52,6 +52,7 @@ tokentype next_token()
 
 }
 
+// Done by : Julian Conner
 void syntaxError2(tokentype type)
 {
   cout << "ERROR : Syntax error" << endl;
