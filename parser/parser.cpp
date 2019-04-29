@@ -36,14 +36,14 @@ string parserName[30] = { "story", "s", "after subject", "after noun", "after ob
 
 void syntaxError1(tokentype expected)
 {
-  cout << endl << "SYNTAX ERROR : expected " << tokenName[expected] << " but found " << saved_lexeme << endl;
+  cout << endl << "SYNTAX ERROR: expected " << tokenName[expected] << " but found " << saved_lexeme << endl;
 
 
 }
 
 void syntaxError2(parser_function function)
 {
-  cout << endl << "SYNTAX ERROR : unexpected " << saved_lexeme << "found in " << parserName [function] << endl;
+  cout << endl << "SYNTAX ERROR: unexpected " << saved_lexeme << "found in " << parserName [function] << endl;
 
   exit(1);
 }
