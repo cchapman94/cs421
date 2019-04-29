@@ -61,7 +61,7 @@ bool match(tokentype expected)
 	  //done by: Chantell Chapman
 	  if(errorfile.is_open())
 	  {
-		  errorfile << "SYNTAX ERROR: expected " << tokenName[expected] << "but found " << string_lexeme <<"\n"; 
+		  errorfile << "SYNTAX ERROR: expected " << tokenName[expected] << "but found " << saved_lexeme <<"\n"; 
 	  }
 	  cout << "Skip or replace the token? (s or r)";
 	  cin >> choice;
