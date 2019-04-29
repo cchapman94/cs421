@@ -34,7 +34,7 @@ string choice;
 enum parser_function { STORY, S, AFTER_SUBJECT, AFTER_NOUN, AFTER_OBJECT, VERB1, TENSE, NOUN, BE };
 string parserName[30] = { "story", "s", "after subject", "after noun", "after obejct", "verb", "tense", "noun", "be" };
 
-void syntaxError2(parser_function function)
+void syntaxError1(tokentype expected)
 {
   cout << endl << "SYNTAX ERROR : expected " << tokenName[expected] << "but found " << saved_lexeme << endl;
 
