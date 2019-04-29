@@ -52,6 +52,12 @@ tokentype next_token()
 
 }
 
+void syntaxError2(tokentype type)
+{
+  cout << "ERROR : Syntax error" << endl;
+
+  exit(1);
+}
 bool match(tokentype expected)
 {
   if (next_token() != expected)  // mismatch has occurred with the next token
