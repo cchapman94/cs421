@@ -55,11 +55,11 @@ boolean match(token_type expected)
   if (next_token() != expected)  // mismatch has occurred with the next token
     { // calls a syntax error function here to  generate a syntax error message here and do recovery
 	  syntaxError1(expected);
-	  //Extra Credit
+	  //Extra Credit: skip token or assume correct token was there
 	  //done by: Chantell Chapman
 	  if(errorfile.is_open())
 	  {
-		  errorfile << "SYNTAX ERROR: expected << tokenName[expected] << "but found " << string_lexeme <<"\n"; //need string name from utility to complete 
+		  errorfile << "SYNTAX ERROR: expected << tokenName[expected] << "but found " << string_lexeme <<"\n"; 
 	  }
 	  cout << "Skip or replace the token? (s or r)";
 	  cin >> choice;
@@ -252,8 +252,8 @@ int main()
   fin.open(filename.c_str());
 
   //-----syntax error EC------
-
-  cout << "Would you like to trace error messages? Please enter 'y' for yes or 'n' for no" //ask user if they want to trace error messages
+//write error messages to error.txt
+  cout << "Would you like to trace error messages? (y or n)"; //ask user if they want to trace error messages
   cin >> choice; //get user input
 	if (choice == "y")
 	{
