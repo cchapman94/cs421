@@ -38,7 +38,7 @@ void syntaxError2(parser_function function)
 {
   cout << endl << "SYNTAX ERROR : expected " << tokenName[expected] << "but found " << saved_lexeme << endl;
 
-  exit(1);
+
 }
 
 void syntaxError2(parser_function function)
