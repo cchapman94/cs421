@@ -36,7 +36,7 @@ string parserName[30] = { "story", "s", "after subject", "after noun", "after ob
 
 void syntaxError1(tokentype expected)
 {
-  cout << endl << "SYNTAX ERROR : expected " << tokenName[expected] << "but found " << saved_lexeme << endl;
+  cout << endl << "SYNTAX ERROR : expected " << tokenName[expected] << " but found " << saved_lexeme << endl;
 
 
 }
