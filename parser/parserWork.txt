@@ -1,23 +1,23 @@
 
 SubmitIt this file with the executable.
 
-Group#:
+Group#: 10
 
 Must have divided the work as specified.
 1.State who did what by indicating: 
-  Member A tasks (syntax error functions) - who:
+  Member A tasks (syntax error functions) - who: Julian Conner
   Member B tasks (match and next_token)- who: Daniel Caballero
-  Member C tasks (main()) who:
+  Member C tasks (main()) who: Chantell Chapman
   Who wrote which parser functions? 
-  Daniel Caballero
-  
+
 If the member did not fully contribute to the assigned part, do not list his/her name!!!!!
 
-2.  Each person came to the meeting?
-    Yes
+2.  Each person came to the meeting? Yes each person came to the meeting
+
 3.  You have included all the required comments? 
    (Grammer rules and Programmer names)
-    
+Yes we included all the required comments 
+
 4.  The parser produced correct output for 
     all 6 test cases?
 
@@ -25,6 +25,8 @@ If the member did not fully contribute to the assigned part, do not list his/her
     If it is error correction, did you make sure errors.txt
     got produced?
     [ You may still do EC later ]
-        
+    
+We included syntax error correction for syntax_error1, made sure error.txt got produced and ability to turn on and off the tracing messages. 
+
      
 
