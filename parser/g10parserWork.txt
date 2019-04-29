@@ -19,7 +19,7 @@ If the member did not fully contribute to the assigned part, do not list his/her
 Yes we included all the required comments 
 
 4.  The parser produced correct output for 
-    all 6 test cases?
+    all 6 test cases? yes
 
 5.  What extra credit feature did you include?
     If it is error correction, did you make sure errors.txt
