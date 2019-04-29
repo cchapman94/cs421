@@ -92,15 +92,64 @@ boolean match(token_type expected)
 // ** Be sure to put the name of the programmer above each function
 // i.e. Done by:
 
-//Done by:
+//Done by: Julian Conner
 // 10. Grammar: <tense> ::= VERBPAST | VERBPASTNEG | VERB | VERBNEG
 
+void tense()
 
+{
+
+    cout << "Processing <tense> " << endl;
+   
+    switch ( next_token() ) 
+   {
+
+      case VERBPAST:
+      case VERBPASTNEG:
+      case VERB:
+      case VERBNEG:
+      break;
+      
+      default:
+       syntaxError2(TENSE);     
+
+    }
+}
+
+// Done By : Julian Conner
 // 9. Grammar: <be> ::= IS | WAS
+void be()
+{
 
+   cout << "Processing <be>"  << endl;
+  
+   switch (next_token() )
+{
+    case IS :
+    case WAS:
+     break;
+    default:
+      syntaxError2( BE );
+}
 
+}
+
+// Done By : Julian Conner
 // 8. Grammar: <verb> ::= WORD2
+void verb()
+{
 
+  cout << "Processing <verb>" << endl;
+
+  switch( next_token())
+  {
+     case WORD2:
+         break;
+     default:
+          syntaxError2(WORD2);
+  }
+
+}
 
 
 //Done by:Daniel Caballero
