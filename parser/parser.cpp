@@ -52,7 +52,7 @@ tokentype next_token()
 
 }
 
-bool match(token_type expected)
+bool match(tokentype expected)
 {
   if (next_token() != expected)  // mismatch has occurred with the next token
     { // calls a syntax error function here to  generate a syntax error message here and do recovery
@@ -61,7 +61,7 @@ bool match(token_type expected)
 	  //done by: Chantell Chapman
 	  if(errorfile.is_open())
 	  {
-		  errorfile << "SYNTAX ERROR: expected " << tokenName[expected] << "but found " << string_lexeme <<"\n"; 
+		  errorfile << "SYNTAX ERROR: expected " << tokenName[expected] << "but found " << saved_lexeme <<"\n"; 
 	  }
 	  cout << "Skip or replace the token? (s or r)";
 	  cin >> choice;
