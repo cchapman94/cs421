@@ -52,7 +52,7 @@ tokentype next_token()
 
 }
 
-bool match(token_type expected)
+bool match(tokentype expected)
 {
   if (next_token() != expected)  // mismatch has occurred with the next token
     { // calls a syntax error function here to  generate a syntax error message here and do recovery
