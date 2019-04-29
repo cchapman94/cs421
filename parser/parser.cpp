@@ -29,9 +29,24 @@ string choice;
 // ----- Utility and Globals -----------------------------------
 // ** Need syntaxerror1 and syntaxerror2 functions (each takes 2 args)
 // ** Be sure to put the name of the programmer above each function
-// i.e. Done by:
+// i.e. Done by: Julian Conner
 
+enum parser_function { STORY, S, AFTER_SUBJECT, AFTER_NOUN, AFTER_OBJECT, VERB1, TENSE, NOUN, BE };
+string parserName[30] = { "story", "s", "after subject", "after noun", "after obejct", "verb", "tense", "noun", "be" };
 
+void syntaxError2(parser_function function)
+{
+  cout << endl << "SYNTAX ERROR : expected " << tokenName[expected] << "but found " << saved_lexeme << endl;
+
+  exit(1);
+}
+
+void syntaxError2(parser_function function)
+{
+  cout << endl << "SYNTAX ERROR : unexpected " << saved_lexeme << "found in " << parserName [function] << endl;
+
+  exit(1);
+}
 
 // ** Need the updated match and next_token (with 2 global vars)
 // ** Be sure to put the name of the programmer above each function
@@ -52,13 +67,6 @@ tokentype next_token()
 
 }
 
-// Done by : Julian Conner
-void syntaxError2(tokentype type)
-{
-  cout << "ERROR : Syntax error" << endl;
-
-  exit(1);
-}
 bool match(tokentype expected)
 {
   if (next_token() != expected)  // mismatch has occurred with the next token
