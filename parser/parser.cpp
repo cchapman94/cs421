@@ -21,6 +21,11 @@ using namespace std;
 //=================================================
 
 // ----- Utility and Globals -----------------------------------
+bool token_available = false; 
+tokentype saved_token;
+string saved_lexeme;
+ofstream errorfile; 
+string choice; 
 
 // ** Need syntaxerror1 and syntaxerror2 functions (each takes 2 args)
 // ** Be sure to put the name of the programmer above each function
@@ -49,7 +54,29 @@ boolean match(token_type expected)
 {
   if (next_token() != expected)  // mismatch has occurred with the next token
     { // calls a syntax error function here to  generate a syntax error message here and do recovery
+	  syntaxError1(expected);
+	  //Extra Credit
+	  //done by: Chantell Chapman
+	  if(errorfile.is_open())
+	  {
+		  errorfile << "SYNTAX ERROR: expected << tokenName[expected] << "but found " << string_lexeme <<"\n"; //need string name from utility to complete 
+	  }
+	  cout << "Skip or replace the token? (s or r)";
+	  cin >> choice;
+	  if (choice == "s") 
+	  {
+		  token_available = false;
+		  match(expected);
+	  }
+	  else if (choice == "r")
+	  {
+		  token_available = false;
+		  cout << "Matched" << tokenName[expected] <<endl;
+	  }
+	  
+	  
     }
+	
   else  // match has occurred
     {   token_available = false;  // eat up the token
       return true;              // say there was a match
@@ -81,7 +108,7 @@ boolean match(token_type expected)
 void noun()
 {
   cout<<"Processing <noun>"<<endl;
-  switch
+  switch(next_token())
     {
     case WORD1:
       match(WORD1);
@@ -90,7 +117,7 @@ void noun()
       match(PRONOUN);
       break;
     default:
-      syntaxError2(NOUN_ERROR);
+      syntaxError2(NOUN);
 
     }//end Swtich
 }//end noun
@@ -98,16 +125,19 @@ void noun()
 // 6. Grammar: <after_object> ::= <noun> DESTINATION <verb> <tense> PERIOD | <verb> <tense> PERIOD
 void after_object()
 {
-  cout<<"Processing <afterSubject>"<<endl
-    switch(next_token)
+  cout<<"Processing <afterObject>"<<endl
+    switch(next_token())
       {
-      case NOUN:
+      case WORD1:
+      case PRONOUN:
+	noun();	    
 	match(DESRINATION);
 	verb();
 	tense();
 	match(PERIOD);
 	break;
-      case VERB:
+      case WORD2:
+	verb();	    
 	tense();
 	match(PERIOD);
 	break;
@@ -123,11 +153,11 @@ void after_object()
 // Grammar: <after noun> ::= <be> PERIOD | DESTINATION <verb> <tense> PERIOD | OBJECT <after obejct>
 void after_noun()
 {
-  cout<<"Processing <after_nount>"<<endl;
+  cout<<"Processing <after_noun>"<<endl;
   switch(next_token())
     {
-    case WORD1:
-    case PRONOUN:
+    case IS:
+    case WAS:
       be();
       match(PERIOD);
       break;
@@ -135,10 +165,11 @@ void after_noun()
       verb();
       tense();
       match(PERIOD);
+      break;
     case OBJECT:
+      match(OBJECT);
       after_object();
       break;
-    case
     default:
       syntaxError2(AFTER_NOUN);
 
@@ -222,10 +253,12 @@ int main()
 
   //-----syntax error EC------
 
-  //ask user if they want to trace error messages
-  //get user input
-  //if file 
-  errorfile.open("errors.txt", ios::app); //errors.text of messages
+  cout << "Would you like to trace error messages? Please enter 'y' for yes or 'n' for no" //ask user if they want to trace error messages
+  cin >> choice; //get user input
+	if (choice == "y")
+	{
+  		errorfile.open("errors.txt", ios::app); //errors.text of messages
+	}
 
   //** calls the <story> to start parsing
   story();
