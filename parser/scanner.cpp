@@ -320,6 +320,9 @@ int scanner(tokentype& a, string& w)
 
   // To return the word by reference 
   w = currentWord;
+	
+  cout << "Scanner called using word: " << w << endl;
+
 
   // Check if the last word is the end of file message
   isEndOfFile = currentWord.compare( endOfFileWord) == 0;
