@@ -1,11 +1,17 @@
 #include<iostream>
 #include<fstream>
 #include<string>
+#include <stdlib.h>
+#include <stdio.h>
 #include"scanner.cpp"
 using namespace std;
 
 //Global Variables
-
+bool token_available = false; 
+tokentype saved_token;
+string saved_lexeme;
+ofstream errorfile; 
+string choice; 
 
 
 
@@ -21,12 +27,6 @@ using namespace std;
 //=================================================
 
 // ----- Utility and Globals -----------------------------------
-bool token_available = false; 
-tokentype saved_token;
-string saved_lexeme;
-ofstream errorfile; 
-string choice; 
-
 // ** Need syntaxerror1 and syntaxerror2 functions (each takes 2 args)
 // ** Be sure to put the name of the programmer above each function
 // i.e. Done by:
