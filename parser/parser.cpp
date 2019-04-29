@@ -107,10 +107,18 @@ void tense()
    {
 
       case VERBPAST:
+	match( VERBPAST);
+	break;
       case VERBPASTNEG:
+	match( VERBPASTNEG);
+	break;
       case VERB:
+	match( VERB);
+	break;
       case VERBNEG:
-      break;
+	match(VERBNEG);
+	break;
+     
       
       default:
        syntaxError2(TENSE);     
@@ -128,8 +136,12 @@ void be()
    switch (next_token() )
 {
     case IS :
+      match(IS);
+      break;
     case WAS:
-     break;
+      match(WAS);
+      break;
+     
     default:
       syntaxError2( BE );
 }
@@ -143,13 +155,8 @@ void verb()
 
   cout << "Processing <verb>" << endl;
 
-  switch( next_token())
-  {
-     case WORD2:
-         break;
-     default:
-          syntaxError2(WORD2);
-  }
+  match(WORD2);
+  
 
 }
 
