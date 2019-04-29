@@ -43,7 +43,7 @@ void syntaxError1(tokentype expected)
 
 void syntaxError2(parser_function function)
 {
-  cout << endl << "SYNTAX ERROR: unexpected " << saved_lexeme << "found in " << parserName [function] << endl;
+  cout << endl << "SYNTAX ERROR: unexpected " << saved_lexeme << " found in " << parserName [function] << endl;
 
   exit(1);
 }
