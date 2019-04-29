@@ -6,17 +6,18 @@ Group#:
 Must have divided the work as specified.
 1.State who did what by indicating: 
   Member A tasks (syntax error functions) - who:
-  Member B tasks (match and next_token)- who:
+  Member B tasks (match and next_token)- who: Daniel Caballero
   Member C tasks (main()) who:
   Who wrote which parser functions? 
-
+  Daniel Caballero
+  
 If the member did not fully contribute to the assigned part, do not list his/her name!!!!!
 
 2.  Each person came to the meeting?
-
+    Yes
 3.  You have included all the required comments? 
    (Grammer rules and Programmer names)
-
+    
 4.  The parser produced correct output for 
     all 6 test cases?
 
