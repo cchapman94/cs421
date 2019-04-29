@@ -36,21 +36,23 @@ string choice;
 // ** Need the updated match and next_token (with 2 global vars)
 // ** Be sure to put the name of the programmer above each function
 // i.e. Done by:Daniel Caballero
-tokentype saved_token;
-bool token_available;
+
+//tokentype saved_token;
+//bool token_available;
 
 tokentype next_token()
 {
-  string saved_lexeme;
+  //string saved_lexeme;
   if (!token_available)   // if there is no saved token yet
-    { scanner(saved_token, saved_lexeme);  // call scanner to grab a new token
-      token_available = true;                              // mark that fact that you have saved it
+    { 
+      scanner(saved_token, saved_lexeme);  // call scanner to grab a new token
+      token_available = true;	// mark that fact that you have saved it
     }
   return saved_token;    // return the saved token
 
 }
 
-boolean match(token_type expected)
+bool match(token_type expected)
 {
   if (next_token() != expected)  // mismatch has occurred with the next token
     { // calls a syntax error function here to  generate a syntax error message here and do recovery
@@ -59,7 +61,7 @@ boolean match(token_type expected)
 	  //done by: Chantell Chapman
 	  if(errorfile.is_open())
 	  {
-		  errorfile << "SYNTAX ERROR: expected << tokenName[expected] << "but found " << string_lexeme <<"\n"; 
+		  errorfile << "SYNTAX ERROR: expected " << tokenName[expected] << "but found " << string_lexeme <<"\n"; 
 	  }
 	  cout << "Skip or replace the token? (s or r)";
 	  cin >> choice;
@@ -174,13 +176,13 @@ void noun()
 // 6. Grammar: <after_object> ::= <noun> DESTINATION <verb> <tense> PERIOD | <verb> <tense> PERIOD
 void after_object()
 {
-  cout<<"Processing <afterObject>"<<endl
+  cout<<"Processing <afterObject>"<<endl; 
     switch(next_token())
       {
       case WORD1:
       case PRONOUN:
 	noun();	    
-	match(DESRINATION);
+	match(DESTINATION);
 	verb();
 	tense();
 	match(PERIOD);
