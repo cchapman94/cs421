@@ -133,7 +133,7 @@ void after_object()
       case WORD1:
       case PRONOUN:
 	noun();	    
-	match(DESRINATION);
+	match(DESTINATION);
 	verb();
 	tense();
 	match(PERIOD);
