@@ -43,7 +43,7 @@ void syntaxError1(tokentype expected)
 
 void syntaxError2(parser_function function)
 {
-  cout << endl << "SYNTAX ERROR: unexpected " << saved_lexeme << " found in " << parserName [function] << endl;
+  cout << endl << "SYNTAX ERROR: unexpected " << saved_lexeme << " found in " << parserName[function] << endl;
 
   exit(1);
 }
@@ -76,9 +76,9 @@ bool match(tokentype expected)
 	  //done by: Chantell Chapman
 	  if(errorfile.is_open())
 	  {
-		  errorfile << "SYNTAX ERROR: expected " << tokenName[expected] << "but found " << saved_lexeme <<"\n"; 
+		  errorfile << "SYNTAX ERROR: expected " << tokenName[expected] << " but found " << saved_lexeme << "\n"; 
 	  }
-	  cout << "Skip or replace the token? (s or r)";
+	  cout << "Skip or replace the token? (s or r) ";
 	  cin >> choice;
 	  if (choice == "s") 
 	  {
@@ -88,7 +88,7 @@ bool match(tokentype expected)
 	  else if (choice == "r")
 	  {
 		  token_available = false;
-		  cout << "Matched" << tokenName[expected] <<endl;
+		  cout << "Matched " << tokenName[expected] <<endl;
 	  }
 	  
 	  
@@ -96,7 +96,7 @@ bool match(tokentype expected)
 	
   else  // match has occurred
     {   token_available = false;  // eat up the token
-     	cout << "Matched" << tokenName[expected] <<endl;
+     	cout << "Matched " << tokenName[expected] << endl;
 
       return true;              // say there was a match
     }
@@ -120,17 +120,17 @@ void tense()
 
     cout << "Processing <tense> " << endl;
    
-    switch ( next_token() ) 
+    switch (next_token()) 
    {
 
       case VERBPAST:
-	match( VERBPAST);
+	match(VERBPAST);
 	break;
       case VERBPASTNEG:
-	match( VERBPASTNEG);
+	match(VERBPASTNEG);
 	break;
       case VERB:
-	match( VERB);
+	match(VERB);
 	break;
       case VERBNEG:
 	match(VERBNEG);
@@ -148,11 +148,11 @@ void tense()
 void be()
 {
 
-   cout << "Processing <be>"  << endl;
+   cout << "Processing <be>" << endl;
   
-   switch (next_token() )
+   switch (next_token())
 {
-    case IS :
+    case IS:
       match(IS);
       break;
     case WAS:
@@ -160,7 +160,7 @@ void be()
       break;
      
     default:
-      syntaxError2( BE );
+      syntaxError2(BE);
 }
 
 }
@@ -182,7 +182,7 @@ void verb()
 // 7. Grammar: <noun> ::= WORD1 | PRONOUN
 void noun()
 {
-  cout<<"Processing <noun>"<<endl;
+  cout << "Processing <noun>" << endl;
   switch(next_token())
     {
     case WORD1:
@@ -197,14 +197,15 @@ void noun()
     }//end Swtich
 }//end noun
 
+//Done by:Daniel Caballero
 // 6. Grammar: <after_object> ::= <noun> DESTINATION <verb> <tense> PERIOD | <verb> <tense> PERIOD
 void after_object()
 {
-  cout<<"Processing <afterObject>"<<endl; 
+  cout << "Processing <afterObject>" << endl; 
     switch(next_token())
       {
-      case WORD1:
-      case PRONOUN:
+      case WORD1: 
+      case PRONOUN: 
 	noun();	    
 	match(DESTINATION);
 	verb();
@@ -224,11 +225,11 @@ void after_object()
 }//end after object
 
 
-
+//Done by:Daniel Caballero
 // Grammar: <after noun> ::= <be> PERIOD | DESTINATION <verb> <tense> PERIOD | OBJECT <after obejct>
 void after_noun()
 {
-  cout<<"Processing <after_noun>"<<endl;
+  cout << "Processing <afterNoun>" << endl;
   switch(next_token())
     {
     case IS:
@@ -276,6 +277,7 @@ void after_subject()
     }
 }
 
+//Done by: Chantell Chapman
 // Grammar: <s>::= [CONNECTOR] <noun> SUBJECT <after subject>
 void s() 
 {
@@ -296,6 +298,7 @@ void s()
     }
 }
 
+//Done by: Chantell Chapman
 // Grammar: <story> ::= <s> {<s>}
 // stay in the loop as long as a possible start 
 void story() 
