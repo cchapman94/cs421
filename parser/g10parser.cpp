@@ -13,8 +13,6 @@ string saved_lexeme;
 ofstream errorfile; 
 string choice; 
 
-
-
 // INSTRUCTION:  Complete all ** parts.
 // You may use any method to connect this file to scanner.cpp
 // that you had written.  
@@ -31,8 +29,9 @@ string choice;
 // ** Be sure to put the name of the programmer above each function
 // i.e. Done by: Julian Conner
 
-enum parser_function { STORY, S, AFTER_SUBJECT, AFTER_NOUN, AFTER_OBJECT, VERB1, TENSE, NOUN, BE };
+enum parser_function { STORY, S, AFTER_SUBJECT, AFTER_NOUN, AFTER_OBEJCT, VERB1, TENSE, NOUN, BE };
 string parserName[30] = { "story", "s", "after subject", "after noun", "after obejct", "verb", "tense", "noun", "be" };
+
 
 void syntaxError1(tokentype expected)
 {
@@ -44,24 +43,20 @@ void syntaxError1(tokentype expected)
 void syntaxError2(parser_function function)
 {
   cout << endl << "SYNTAX ERROR: unexpected " << saved_lexeme << " found in " << parserName[function] << endl;
-
   exit(1);
 }
+
 
 // ** Need the updated match and next_token (with 2 global vars)
 // ** Be sure to put the name of the programmer above each function
 // i.e. Done by:Daniel Caballero
 
-//tokentype saved_token;
-//bool token_available;
-
 tokentype next_token()
 {
-  //string saved_lexeme;
   if (!token_available)   // if there is no saved token yet
     { 
       scanner(saved_token, saved_lexeme);  // call scanner to grab a new token
-      token_available = true;	// mark that fact that you have saved it
+      token_available = true; // mark that fact that you have saved it
     }
   return saved_token;    // return the saved token
 
@@ -71,37 +66,42 @@ bool match(tokentype expected)
 {
   if (next_token() != expected)  // mismatch has occurred with the next token
     { // calls a syntax error function here to  generate a syntax error message here and do recovery
-	  syntaxError1(expected);
-	  //Extra Credit: skip token or assume correct token was there
-	  //done by: Chantell Chapman
-	  if(errorfile.is_open())
-	  {
-		  errorfile << "SYNTAX ERROR: expected " << tokenName[expected] << " but found " << saved_lexeme << "\n"; 
-	  }
-	  cout << "Skip or replace the token? (s or r) ";
-	  cin >> choice;
-	  if (choice == "s") 
-	  {
-		  token_available = false;
-		  match(expected);
-	  }
-	  else if (choice == "r")
-	  {
-		  token_available = false;
-		  cout << "Matched " << tokenName[expected] <<endl;
-	  }
-	  
-	  
+    syntaxError1(expected);
+    
+
+    //Extra Credit: skip token or assume correct token was there
+    //done by: Chantell Chapman
+    if (errorfile.is_open())
+    {
+      errorfile << "SYNTAX ERROR: expected " << tokenName[expected] << " but found " << saved_lexeme << "\n"; 
     }
-	
+
+    cout << "Skip or replace the token? (s or r) ";
+    cin >> choice;
+
+  
+    if (choice == "s") 
+    {
+      token_available = false;
+      match(expected);
+    }
+
+    else if (choice == "r")
+    {
+      token_available = false;
+      cout << "Matched " << tokenName[expected] << endl;
+    }
+    
+    
+    }//end of if (next_token() != expected)
+  
   else  // match has occurred
     {   token_available = false;  // eat up the token
-     	cout << "Matched " << tokenName[expected] << endl;
+      cout << "Matched " << tokenName[expected] << endl;
 
       return true;              // say there was a match
     }
 }
-
 
 // ----- RDP functions - one per non-term -------------------
 
@@ -113,30 +113,24 @@ bool match(tokentype expected)
 
 //Done by: Julian Conner
 // 10. Grammar: <tense> ::= VERBPAST | VERBPASTNEG | VERB | VERBNEG
-
 void tense()
-
 {
-
     cout << "Processing <tense> " << endl;
    
     switch (next_token()) 
    {
-
       case VERBPAST:
-	match(VERBPAST);
-	break;
+  match(VERBPAST);
+  break;
       case VERBPASTNEG:
-	match(VERBPASTNEG);
-	break;
+  match(VERBPASTNEG);
+  break;
       case VERB:
-	match(VERB);
-	break;
+  match(VERB);
+  break;
       case VERBNEG:
-	match(VERBNEG);
-	break;
-     
-      
+  match(VERBNEG);
+  break;          
       default:
        syntaxError2(TENSE);     
 
@@ -151,17 +145,16 @@ void be()
    cout << "Processing <be>" << endl;
   
    switch (next_token())
-{
+  {
     case IS:
       match(IS);
       break;
     case WAS:
       match(WAS);
-      break;
-     
+      break;    
     default:
       syntaxError2(BE);
-}
+  }
 
 }
 
@@ -171,18 +164,16 @@ void verb()
 {
 
   cout << "Processing <verb>" << endl;
-
   match(WORD2);
   
-
 }
-
 
 //Done by:Daniel Caballero
 // 7. Grammar: <noun> ::= WORD1 | PRONOUN
 void noun()
 {
   cout << "Processing <noun>" << endl;
+
   switch(next_token())
     {
     case WORD1:
@@ -202,23 +193,23 @@ void noun()
 void after_object()
 {
   cout << "Processing <afterObject>" << endl; 
+
     switch(next_token())
       {
-      case WORD1: 
-      case PRONOUN: 
-	noun();	    
-	match(DESTINATION);
-	verb();
-	tense();
-	match(PERIOD);
-	break;
+      case WORD1: case PRONOUN: 
+  noun();     
+  match(DESTINATION);
+  verb();
+  tense();
+  match(PERIOD);
+  break;
       case WORD2:
-	verb();	    
-	tense();
-	match(PERIOD);
-	break;
+  verb();     
+  tense();
+  match(PERIOD);
+  break;
       default:
-	syntaxError2(AFTER_OBJECT);
+  syntaxError2(AFTER_OBEJCT);
     
       }//end swtich
 
@@ -232,12 +223,13 @@ void after_noun()
   cout << "Processing <afterNoun>" << endl;
   switch(next_token())
     {
-    case IS:
-    case WAS:
+    case IS: case WAS:
+
       be();
       match(PERIOD);
       break;
     case DESTINATION:
+      match(DESTINATION);
       verb();
       tense();
       match(PERIOD);
@@ -246,12 +238,11 @@ void after_noun()
       match(OBJECT);
       after_object();
       break;
+
     default:
       syntaxError2(AFTER_NOUN);
 
     }//end switch
-
-
 
 }//end after_noun
 
@@ -308,10 +299,10 @@ void story()
   while (true)
     {
       if (next_token() == EOFM)
-	{
-	  cout << endl << "Successfully parsed <story>." << endl;
-	  break;
-	}
+  {
+    cout << endl << "Successfully parsed <story>." << endl;
+    break;
+  }
       s();
       
     }
@@ -333,10 +324,10 @@ int main()
 //write error messages to error.txt
   cout << "Would you like to trace error messages? (y or n)"; //ask user if they want to trace error messages
   cin >> choice; //get user input
-	if (choice == "y")
-	{
-  		errorfile.open("errors.txt", ios::app); //errors.text of messages
-	}
+  if (choice == "y")
+  {
+      errorfile.open("errors.txt", ios::app); //errors.text of messages
+  }
 
   //** calls the <story> to start parsing
   story();
