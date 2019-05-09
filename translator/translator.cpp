@@ -74,7 +74,7 @@ void syntaxError2(parser_function function)
 
 //** Additions to parser.cpp here:
 
-//Done by: 
+//Done by: Daniel Caballero
 //    getEword - using the current lexeme, look up the English word
 //               in the Lexicon if it is there -- save the result   
 //               in saved_E_word
@@ -279,7 +279,7 @@ void after_object()
 }//end after object
 
 
-//Done by:
+//Done by: Daniel Caballero
 // (OLD) Grammar: <after noun> ::= <be> PERIOD | DESTINATION <verb> <tense> PERIOD | OBJECT <after obejct>
 // Grammar: <after noun> ::= <be> #gen("DESCRIPTION")# #gen("TENSE")# PERIOD | DESTINATION #gen("TO") 
 //     						<verb> #getEword# #gen("ACTION)# <tense> #gen("TENSE")# PERIOD 
