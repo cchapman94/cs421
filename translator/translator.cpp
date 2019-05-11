@@ -86,10 +86,10 @@ void getEword()
     if(Jap[i]==saved_lexeme){
       saved_lexeme=Eng[i];
       break;
-    }//end ig
-    return;
+    }//end if
+    i++;
   }//end while
-
+return;
 
 }
 
