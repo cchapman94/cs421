@@ -79,8 +79,17 @@ void syntaxError2(parser_function function)
 //               in the Lexicon if it is there -- save the result   
 //               in saved_E_word
 
-void (getEword())
+void getEword()
 {
+  int i=0;
+  while(i<Jap.size()){
+    if(Jap[i]==saved_lexeme){
+      saved_lexeme=Eng[i];
+      break;
+    }//end ig
+    return;
+  }//end while
+
 
 }
 
@@ -116,31 +125,31 @@ bool match(tokentype expected)
 {
   if (next_token() != expected)  // mismatch has occurred with the next token
     { // calls a syntax error function here to  generate a syntax error message here and do recovery
-    syntaxError1(expected);
+      syntaxError1(expected);
     
 
-    //Extra Credit: skip token or assume correct token was there
-    //done by: Chantell Chapman
-    if (errorfile.is_open())
-    {
-      errorfile << "SYNTAX ERROR: expected " << tokenName[expected] << " but found " << saved_lexeme << "\n"; 
-    }
+      //Extra Credit: skip token or assume correct token was there
+      //done by: Chantell Chapman
+      if (errorfile.is_open())
+	{
+	  errorfile << "SYNTAX ERROR: expected " << tokenName[expected] << " but found " << saved_lexeme << "\n"; 
+	}
 
-    cout << "Skip or replace the token? (s or r) ";
-    cin >> choice;
+      cout << "Skip or replace the token? (s or r) ";
+      cin >> choice;
 
   
-    if (choice == "s") 
-    {
-      token_available = false;
-      match(expected);
-    }
+      if (choice == "s") 
+	{
+	  token_available = false;
+	  match(expected);
+	}
 
-    else if (choice == "r")
-    {
-      token_available = false;
-      cout << "Matched " << tokenName[expected] << endl;
-    }
+      else if (choice == "r")
+	{
+	  token_available = false;
+	  cout << "Matched " << tokenName[expected] << endl;
+	}
     
     
     }//end of if (next_token() != expected)
@@ -171,24 +180,24 @@ bool match(tokentype expected)
 // 10. Grammar: <tense> ::= VERBPAST | VERBPASTNEG | VERB | VERBNEG
 void tense()
 {
-    cout << "Processing <tense> " << endl;
+  cout << "Processing <tense> " << endl;
    
-    switch (next_token()) 
-   {
-      case VERBPAST:
-  match(VERBPAST);
-  break;
-      case VERBPASTNEG:
-  match(VERBPASTNEG);
-  break;
-      case VERB:
-  match(VERB);
-  break;
-      case VERBNEG:
-  match(VERBNEG);
-  break;          
-      default:
-       syntaxError2(TENSE);     
+  switch (next_token()) 
+    {
+    case VERBPAST:
+      match(VERBPAST);
+      break;
+    case VERBPASTNEG:
+      match(VERBPASTNEG);
+      break;
+    case VERB:
+      match(VERB);
+      break;
+    case VERBNEG:
+      match(VERBNEG);
+      break;          
+    default:
+      syntaxError2(TENSE);     
 
     }
 }
@@ -198,10 +207,10 @@ void tense()
 void be()
 {
 
-   cout << "Processing <be>" << endl;
+  cout << "Processing <be>" << endl;
   
-   switch (next_token())
-  {
+  switch (next_token())
+    {
     case IS:
       match(IS);
       break;
@@ -210,7 +219,7 @@ void be()
       break;    
     default:
       syntaxError2(BE);
-  }
+    }
 
 }
 
@@ -249,32 +258,32 @@ void noun()
 // (OLD) Grammar: <after_object> ::= <noun> DESTINATION <verb> <tense> PERIOD | <verb> <tense> PERIOD
 
 // Grammar: <after_object> ::= <noun> #getEword# DESTINATION #gen("TO")# <verb> #getEword# #gen("ACTION")# 
-//								<tense> #gen("TENSE")# PERIOD 
+//<tense> #gen("TENSE")# PERIOD 
 //                             | <verb> #getEword# #gen("ACTION")# <tense> #gen("TENSE")# PERIOD
 void after_object()
 {
   cout << "Processing <afterObject>" << endl; 
 
-    switch(next_token())
-      {
-      case WORD1: case PRONOUN: 
-  noun();     
-  match(DESTINATION);
-  verb();
-  tense();
-  match(PERIOD);
-  break;
+  switch(next_token())
+    {
+    case WORD1: case PRONOUN: 
+      noun();     
+      match(DESTINATION);
+      verb();
+      tense();
+      match(PERIOD);
+      break;
      
-      case WORD2:
-  verb();     
-  tense();
-  match(PERIOD);
-  break;
+    case WORD2:
+      verb();     
+      tense();
+      match(PERIOD);
+      break;
      
-      default:
-  syntaxError2(AFTER_OBEJCT);
+    default:
+      syntaxError2(AFTER_OBEJCT);
     
-      }//end swtich
+    }//end swtich
 
 }//end after object
 
@@ -282,7 +291,7 @@ void after_object()
 //Done by: Daniel Caballero
 // (OLD) Grammar: <after noun> ::= <be> PERIOD | DESTINATION <verb> <tense> PERIOD | OBJECT <after obejct>
 // Grammar: <after noun> ::= <be> #gen("DESCRIPTION")# #gen("TENSE")# PERIOD | DESTINATION #gen("TO") 
-//     						<verb> #getEword# #gen("ACTION)# <tense> #gen("TENSE")# PERIOD 
+//     <verb> #getEword# #gen("ACTION)# <tense> #gen("TENSE")# PERIOD 
 //                           | OBJECT #gen("OBJECT")# <after obejct>
 void after_noun()
 {
@@ -293,18 +302,25 @@ void after_noun()
     case IS: case WAS:
 
       be();
+      gen(DESCRIPTION);
+      gen(TENSE);
       match(PERIOD);
       break;
 
     case DESTINATION:
       match(DESTINATION);
+      gen(TO);
       verb();
+      getEword();
+      gen(ACTION);
       tense();
+      gen(TENSE);
       match(PERIOD);
       break;
 
     case OBJECT:
       match(OBJECT);
+      gen(OBJECT);
       after_object();
       break;
 
@@ -381,10 +397,10 @@ void story()
   while (true)
     {
       if (next_token() == EOFM)
-  {
-    cout << endl << "Successfully parsed <story>." << endl;
-    break;
-  }
+	{
+	  cout << endl << "Successfully parsed <story>." << endl;
+	  break;
+	}
       s();
       
     }
@@ -400,39 +416,39 @@ int main()
 {
   //** opens the lexicon.txt file and reads it in
   //** closes lexicon.txt 
-ifstream dictionary;
-dictionary.open("lexicon.txt");
+  ifstream dictionary;
+  dictionary.open("lexicon.txt");
 
-for(int i =0; i < 47; i++)
-{
-	dictionary >> Jap[i]; //Japanese words
-	dictionary >> Eng[i]; //English words
-}
+  for(int i =0; i < 47; i++)
+    {
+      dictionary >> Jap[i]; //Japanese words
+      dictionary >> Eng[i]; //English words
+    }
 
   //** opens the output file translated.txt
-translatedfile.open("translated.txt");
+  translatedfile.open("translated.txt");
 
   cout << "Enter the input file name: ";
   cin >> filename;
   fin.open(filename.c_str());
 
-    //-----syntax error EC------
-//write error messages to error.txt
+  //-----syntax error EC------
+  //write error messages to error.txt
   cout << "Would you like to trace error messages? (y or n)"; //ask user if they want to trace error messages
   cin >> choice; //get user input
   if (choice == "y")
-  {
+    {
       errorfile.open("errors.txt", ios::app); //errors.text of messages
-  }
+    }
 
 
   //** calls the <story> to start parsing
-story();
-//closes error file for EC
-errorfile.close();
+  story();
+  //closes error file for EC
+  errorfile.close();
   //** closes the input file 
-dictionary.close();
+  dictionary.close();
   //** closes traslated.txt
- translatedfile.close();
+  translatedfile.close();
 
 }// end
