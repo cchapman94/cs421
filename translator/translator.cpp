@@ -268,15 +268,23 @@ void after_object()
     {
     case WORD1: case PRONOUN: 
       noun();     
+      getEword();
       match(DESTINATION);
+      gen("TO");
       verb();
+      getEword();
+      gen("ACTION");
       tense();
+      gen("TENSE");
       match(PERIOD);
       break;
      
     case WORD2:
       verb();     
+      getEword();
+      gen("ACTION");
       tense();
+      gen("TENSE");
       match(PERIOD);
       break;
      
