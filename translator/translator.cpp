@@ -39,6 +39,8 @@ using namespace std;
 
 
 //----File parser.cpp that needs to be updated------------
+enum tokentype { WORD1, WORD2, PERIOD, VERB, VERBNEG, VERBPAST, VERBPASTNEG, IS, WAS, OBJECT, SUBJECT, DESTINATION, PRONOUN, CONNECTOR, EOFM, ERROR };
+
 bool token_available = false; 
 tokentype saved_token;
 string saved_lexeme;
