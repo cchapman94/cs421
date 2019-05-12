@@ -39,17 +39,25 @@ using namespace std;
 
 
 //----File parser.cpp that needs to be updated------------
+
+// ** Update the tokentype to be WORD1, WORD2, PERIOD, ERROR, EOFM, etc.
 enum tokentype { WORD1, WORD2, PERIOD, VERB, VERBNEG, VERBPAST, VERBPASTNEG, IS, WAS, OBJECT, SUBJECT, DESTINATION, PRONOUN, CONNECTOR, EOFM, ERROR };
+
+// ** string tokenName[30] = { }; for the display names oftokens - must be in the same order as the tokentype.
+string tokenName[30] = { "WORD1", "WORD2", "PERIOD", "VERB", "VERBNEG", "VERBPAST", "VERBPASTNEG", "IS", "WAS", "OBJECT", "SUBJECT", "DESTINATION", "PRONOUN", "CONNECTOR", "EOFM", "ERROR" };
 
 bool token_available = false; 
 tokentype saved_token;
 string saved_lexeme;
 ofstream errorfile; 
+
 string choice; 
 string saved_E_word;
 ofstream translatedfile;
-string Jap[47];
-string Eng[47];
+const int JAP_SIZE = 47;
+const int ENG_SIZE = 47;
+string Jap[JAP_SIZE];
+string Eng[ENG_SIZE];
 
 // ----- Utility and Globals -----------------------------------
 // ** Need syntaxerror1 and syntaxerror2 functions (each takes 2 args)
@@ -84,7 +92,7 @@ void syntaxError2(parser_function function)
 void getEword()
 {
   int i=0;
-  while(i<Jap.size()){
+  while(i<JAP_SIZE){
     if(Jap[i]==saved_lexeme){
       saved_lexeme=Eng[i];
       break;
@@ -106,7 +114,7 @@ return;
 void gen(string line_type)
 {
 
-  fin << line_type << " : " << saved_token << endl;
+  translatedfile << line_type << " : " << saved_token << endl;
 }
 
 
@@ -428,8 +436,11 @@ int main()
   //** opens the lexicon.txt file and reads it in
   //** closes lexicon.txt 
   ifstream dictionary;
-  dictionary.open("lexicon.txt");
+  string fileName;
+  ifstream fin;
 
+  dictionary.open("lexicon.txt");
+  
   for(int i =0; i < 47; i++)
     {
       dictionary >> Jap[i]; //Japanese words
@@ -440,8 +451,8 @@ int main()
   translatedfile.open("translated.txt");
 
   cout << "Enter the input file name: ";
-  cin >> filename;
-  fin.open(filename.c_str());
+  getline(cin, fileName);
+  fin.open(fileName.c_str());
 
   //-----syntax error EC------
   //write error messages to error.txt
@@ -462,4 +473,6 @@ int main()
   //** closes traslated.txt
   translatedfile.close();
 
+  //** Closes the input file stream
+  fin.close();
 }// end
