@@ -96,7 +96,7 @@ return;
 
 
 
-//Done by: 
+//Done by: Julian Conner
 //    gen(line_type) - using the line type,
 //                     sends a line of an IR to translated.txt
 //                     (saved_E_word or saved_token is used)
@@ -104,6 +104,7 @@ return;
 void gen(string line_type)
 {
 
+  fin << line_type << " : " << saved_token << endl;
 }
 
 
@@ -254,7 +255,7 @@ void noun()
 }//end noun
 
 //--------start updating to new grammer rules here------------
-//Done by:
+//Done by: Julian Conner
 // (OLD) Grammar: <after_object> ::= <noun> DESTINATION <verb> <tense> PERIOD | <verb> <tense> PERIOD
 
 // Grammar: <after_object> ::= <noun> #getEword# DESTINATION #gen("TO")# <verb> #getEword# #gen("ACTION")# 
