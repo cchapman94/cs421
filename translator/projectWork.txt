@@ -3,18 +3,18 @@ GROUP#
 
 Must have divided the work as specified.
 1.State who did what by indicating: 
-  Member A tasks (getEword) - who:
-  Member B tasks (gen) - who:
-  Member C tasks (dictionary) - who:
+  Member A tasks (getEword) - who: Daniel Caballero
+  Member B tasks (gen) - who: Julian Conner
+  Member C tasks (dictionary) - who: Chantell Chapman
   Who updated which parser functions with getEword and gen
   calls? 
 
 If the member did not fully contribute to the assigned part,
 do not list his/her name!!!!!
 
-2. Each person came to the meeting?
+2. Each person came to the meeting? Yes
 
-3. You have included all the required comments?
+3. You have included all the required comments? Yes
    (updated the grammar rules in comments?)
 
 4. The project produced correct output for all 6
