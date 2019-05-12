@@ -321,25 +321,25 @@ void after_noun()
     case IS: case WAS:
 
       be();
-      gen(DESCRIPTION);
-      gen(TENSE);
+      gen("DESCRIPTION");
+      gen("TENSE");
       match(PERIOD);
       break;
 
     case DESTINATION:
       match(DESTINATION);
-      gen(TO);
+      gen("TO");
       verb();
       getEword();
-      gen(ACTION);
+      gen("ACTION");
       tense();
-      gen(TENSE);
+      gen("TENSE");
       match(PERIOD);
       break;
 
     case OBJECT:
       match(OBJECT);
-      gen(OBJECT);
+      gen("OBJECT");
       after_object();
       break;
 
