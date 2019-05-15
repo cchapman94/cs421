@@ -404,7 +404,7 @@ int scanner(tokentype& a, string& w)
          << endl;
   }
 
-
+return 0;
    
 }//the end of scanner
 
