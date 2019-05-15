@@ -15,10 +15,6 @@ using namespace std;
 // File translator.cpp written by Group Number: **10
 //=================================================
 
-//beginning of parser 
-//=================================================
-// File parser.cpp 
-//=================================================
 // ----- Changes to the parser.cpp ---------------------
 
 // ** Declare dictionary that will hold the content of lexicon.txt
