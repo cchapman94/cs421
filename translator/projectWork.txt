@@ -1,5 +1,5 @@
 
-GROUP#
+GROUP#10
 
 Must have divided the work as specified.
 1.State who did what by indicating: 
@@ -18,9 +18,9 @@ do not list his/her name!!!!!
    (updated the grammar rules in comments?)
 
 4. The project produced correct output for all 6
-   test cases?
+   test cases? yes
 
 5. If you did EC error recovery,
    test 7 worked and produced translated.txt
-   and errors.txt?
+   and errors.txt? 
 
