@@ -8,6 +8,9 @@ Must have divided the work as specified.
   Member C tasks (dictionary) - who: Chantell Chapman
   Who updated which parser functions with getEword and gen
   calls? 
+  Julian Conner: afterObject
+  Daniel Caballero: afterNoun
+  Chantell Chapman: afterSubject and s
 
 If the member did not fully contribute to the assigned part,
 do not list his/her name!!!!!
@@ -22,5 +25,5 @@ do not list his/her name!!!!!
 
 5. If you did EC error recovery,
    test 7 worked and produced translated.txt
-   and errors.txt? 
+   and errors.txt? it produced info to translated.txt and errors.txt
 
